@@ -1,0 +1,45 @@
+export const DEFAULT_TIMEZONE = 'America/New_York';
+
+// Microsoft Windows timezone names → IANA timezone identifiers
+export const MS_TO_IANA_TIMEZONES: Record<string, string> = {
+	'US Eastern Standard Time': 'America/Indiana/Indianapolis',
+	'Eastern Standard Time': 'America/New_York',
+	'Central Standard Time': 'America/Chicago',
+	'Mountain Standard Time': 'America/Denver',
+	'Pacific Standard Time': 'America/Los_Angeles',
+	'Alaska Standard Time': 'America/Anchorage',
+	'Hawaiian Standard Time': 'Pacific/Honolulu',
+	'Atlantic Standard Time': 'America/Halifax',
+	UTC: 'UTC',
+	'GMT Standard Time': 'Europe/London',
+	'W. Europe Standard Time': 'Europe/Berlin',
+	'Central European Standard Time': 'Europe/Warsaw',
+	'Romance Standard Time': 'Europe/Paris',
+	'Central Europe Standard Time': 'Europe/Budapest',
+	'India Standard Time': 'Asia/Kolkata',
+	'China Standard Time': 'Asia/Shanghai',
+	'Tokyo Standard Time': 'Asia/Tokyo',
+	'AUS Eastern Standard Time': 'Australia/Sydney',
+};
+
+export const PROPERTY_ORDER = [
+	'DTSTART',
+	'DTEND',
+	'DURATION',
+	'RECURRENCE-ID',
+	'RRULE',
+	'EXDATE',
+	'RDATE',
+	'SUMMARY',
+	'DESCRIPTION',
+	'LOCATION',
+	'STATUS',
+	'CATEGORIES',
+	'ORGANIZER',
+	'ATTENDEE',
+	'DTSTAMP',
+	'CREATED',
+	'LAST-MODIFIED',
+	'TRANSP',
+	'CLASS',
+];

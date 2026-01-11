@@ -1,0 +1,14 @@
+{
+	"$schema": "./node_modules/oxlint/configuration_schema.json",
+	"plugins": ["typescript", "import"],
+	"env": {
+		"browser": true,
+		"node": true
+	},
+	"rules": {
+		"typescript/no-explicit-any": "error",
+		"typescript/consistent-type-imports": "error",
+		"import/no-cycle": "error"
+	},
+	"ignorePatterns": ["**/node_modules/**", "**/dist/**", "**/*.min.js"]
+}
