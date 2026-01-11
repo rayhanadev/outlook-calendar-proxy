@@ -1,415 +1,396 @@
 <!doctype html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Normical - Fix Outlook Calendar Sync</title>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Normical - Fix Outlook Calendar Sync</title>
 
-    <meta
-      name="description"
-      content="Normalize Outlook ICS feeds for reliable Google Calendar sync. No more duplicate events or timezone issues."
-    />
-    <meta name="author" content="Normical" />
+		<meta
+			name="description"
+			content="Normalize Outlook ICS feeds for reliable Google Calendar sync. No more duplicate events or timezone issues."
+		/>
+		<meta name="author" content="Normical" />
 
-    <meta property="og:type" content="website" />
-    <meta property="og:title" content="Normical" />
-    <meta
-      property="og:description"
-      content="Fix Outlook calendar sync issues with Google Calendar. Normalizes ICS feeds to eliminate duplicates and timezone problems."
-    />
-    <meta property="og:image" content="https://normical.com/og.png" />
-    <meta property="og:url" content="https://normical.com" />
+		<meta property="og:type" content="website" />
+		<meta property="og:title" content="Normical" />
+		<meta
+			property="og:description"
+			content="Fix Outlook calendar sync issues with Google Calendar. Normalizes ICS feeds to eliminate duplicates and timezone problems."
+		/>
+		<meta property="og:image" content="https://normical.com/og.png" />
+		<meta property="og:url" content="https://normical.com" />
 
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Normical" />
-    <meta
-      name="twitter:description"
-      content="Fix Outlook calendar sync issues with Google Calendar. Normalizes ICS feeds to eliminate duplicates and timezone problems."
-    />
-    <meta name="twitter:image" content="https://normical.com/og.png" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content="Normical" />
+		<meta
+			name="twitter:description"
+			content="Fix Outlook calendar sync issues with Google Calendar. Normalizes ICS feeds to eliminate duplicates and timezone problems."
+		/>
+		<meta name="twitter:image" content="https://normical.com/og.png" />
 
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="apple-touch-icon" href="/favicon.svg" />
-    <meta name="theme-color" content="#000000" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="apple-touch-icon" href="/favicon.svg" />
+		<meta name="theme-color" content="#000000" />
 
-    <style>
-      @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap");
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
 
-      * {
-        box-sizing: border-box;
-        margin: 0;
-        padding: 0;
-      }
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
 
-      body {
-        font-family:
-          "JetBrains Mono", "SF Mono", Monaco, "Cascadia Code", monospace;
-        background: #fff;
-        color: #000;
-        min-height: 100vh;
-        padding: 0;
-      }
+			body {
+				font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+				background: #fff;
+				color: #000;
+				min-height: 100vh;
+				padding: 0;
+			}
 
-      .grid-bg {
-        position: fixed;
-        inset: 0;
-        background-image:
-          linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
-        background-size: 24px 24px;
-        pointer-events: none;
-        z-index: 0;
-      }
+			.grid-bg {
+				position: fixed;
+				inset: 0;
+				background-image:
+					linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+				background-size: 24px 24px;
+				pointer-events: none;
+				z-index: 0;
+			}
 
-      .container {
-        position: relative;
-        z-index: 1;
-        max-width: 640px;
-        margin: 0 auto;
-        padding: 80px 24px;
-      }
+			.container {
+				position: relative;
+				z-index: 1;
+				max-width: 640px;
+				margin: 0 auto;
+				padding: 80px 24px;
+			}
 
-      header {
-        margin-bottom: 64px;
-      }
+			header {
+				margin-bottom: 64px;
+			}
 
-      .logo {
-        display: inline-flex;
-        align-items: center;
-        gap: 12px;
-        margin-bottom: 48px;
-      }
+			.logo {
+				display: inline-flex;
+				align-items: center;
+				gap: 12px;
+				margin-bottom: 48px;
+			}
 
-      .logo-mark {
-        width: 32px;
-        height: 32px;
-        background: #000;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
+			.logo-mark {
+				width: 32px;
+				height: 32px;
+				background: #000;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
 
-      .logo-mark span {
-        color: #fff;
-        font-size: 14px;
-        font-weight: 600;
-      }
+			.logo-mark span {
+				color: #fff;
+				font-size: 14px;
+				font-weight: 600;
+			}
 
-      .logo-text {
-        font-size: 14px;
-        font-weight: 500;
-        letter-spacing: -0.01em;
-      }
+			.logo-text {
+				font-size: 14px;
+				font-weight: 500;
+				letter-spacing: -0.01em;
+			}
 
-      h1 {
-        font-size: 32px;
-        font-weight: 500;
-        letter-spacing: -0.02em;
-        line-height: 1.2;
-        margin-bottom: 16px;
-      }
+			h1 {
+				font-size: 32px;
+				font-weight: 500;
+				letter-spacing: -0.02em;
+				line-height: 1.2;
+				margin-bottom: 16px;
+			}
 
-      .subtitle {
-        font-size: 14px;
-        color: #666;
-        line-height: 1.6;
-      }
+			.subtitle {
+				font-size: 14px;
+				color: #666;
+				line-height: 1.6;
+			}
 
-      .card {
-        background: #fafafa;
-        border: 1px solid #e5e5e5;
-        padding: 32px;
-      }
+			.card {
+				background: #fafafa;
+				border: 1px solid #e5e5e5;
+				padding: 32px;
+			}
 
-      label {
-        display: block;
-        font-size: 11px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #666;
-        margin-bottom: 8px;
-      }
+			label {
+				display: block;
+				font-size: 11px;
+				font-weight: 500;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				color: #666;
+				margin-bottom: 8px;
+			}
 
-      input {
-        width: 100%;
-        padding: 12px 16px;
-        background: #fff;
-        border: 1px solid #e5e5e5;
-        font-family: inherit;
-        font-size: 13px;
-        color: #000;
-        transition: border-color 0.15s;
-      }
+			input {
+				width: 100%;
+				padding: 12px 16px;
+				background: #fff;
+				border: 1px solid #e5e5e5;
+				font-family: inherit;
+				font-size: 13px;
+				color: #000;
+				transition: border-color 0.15s;
+			}
 
-      input:focus {
-        outline: none;
-        border-color: #000;
-      }
+			input:focus {
+				outline: none;
+				border-color: #000;
+			}
 
-      input::placeholder {
-        color: #999;
-      }
+			input::placeholder {
+				color: #999;
+			}
 
-      button {
-        width: 100%;
-        padding: 12px 16px;
-        margin-top: 16px;
-        background: #000;
-        border: 1px solid #000;
-        color: #fff;
-        font-family: inherit;
-        font-size: 13px;
-        font-weight: 500;
-        cursor: pointer;
-        transition:
-          background 0.15s,
-          color 0.15s;
-      }
+			button {
+				width: 100%;
+				padding: 12px 16px;
+				margin-top: 16px;
+				background: #000;
+				border: 1px solid #000;
+				color: #fff;
+				font-family: inherit;
+				font-size: 13px;
+				font-weight: 500;
+				cursor: pointer;
+				transition:
+					background 0.15s,
+					color 0.15s;
+			}
 
-      button:hover {
-        background: #fff;
-        color: #000;
-      }
+			button:hover {
+				background: #fff;
+				color: #000;
+			}
 
-      .result {
-        margin-top: 24px;
-        padding: 16px;
-        background: #fff;
-        border: 1px solid #e5e5e5;
-        display: none;
-      }
+			.result {
+				margin-top: 24px;
+				padding: 16px;
+				background: #fff;
+				border: 1px solid #e5e5e5;
+				display: none;
+			}
 
-      .result.show {
-        display: block;
-      }
+			.result.show {
+				display: block;
+			}
 
-      .result-label {
-        font-size: 11px;
-        font-weight: 500;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #666;
-        margin-bottom: 8px;
-      }
+			.result-label {
+				font-size: 11px;
+				font-weight: 500;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				color: #666;
+				margin-bottom: 8px;
+			}
 
-      .result-url {
-        font-size: 12px;
-        color: #000;
-        word-break: break-all;
-        cursor: pointer;
-        padding: 8px;
-        background: #f5f5f5;
-        border: 1px dashed #ccc;
-      }
+			.result-url {
+				font-size: 12px;
+				color: #000;
+				word-break: break-all;
+				cursor: pointer;
+				padding: 8px;
+				background: #f5f5f5;
+				border: 1px dashed #ccc;
+			}
 
-      .result-url:hover {
-        background: #eee;
-      }
+			.result-url:hover {
+				background: #eee;
+			}
 
-      .copied {
-        font-size: 11px;
-        color: #000;
-        margin-top: 8px;
-        opacity: 0;
-        transition: opacity 0.15s;
-      }
+			.copied {
+				font-size: 11px;
+				color: #000;
+				margin-top: 8px;
+				opacity: 0;
+				transition: opacity 0.15s;
+			}
 
-      .copied.show {
-        opacity: 1;
-      }
+			.copied.show {
+				opacity: 1;
+			}
 
-      .error {
-        color: #c00;
-        margin-top: 16px;
-        font-size: 12px;
-      }
+			.error {
+				color: #c00;
+				margin-top: 16px;
+				font-size: 12px;
+			}
 
-      .features {
-        margin-top: 48px;
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 1px;
-        background: #e5e5e5;
-        border: 1px solid #e5e5e5;
-      }
+			.features {
+				margin-top: 48px;
+				display: grid;
+				grid-template-columns: repeat(3, 1fr);
+				gap: 1px;
+				background: #e5e5e5;
+				border: 1px solid #e5e5e5;
+			}
 
-      .feature {
-        background: #fff;
-        padding: 24px;
-      }
+			.feature {
+				background: #fff;
+				padding: 24px;
+			}
 
-      .feature-title {
-        font-size: 11px;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        margin-bottom: 8px;
-      }
+			.feature-title {
+				font-size: 11px;
+				font-weight: 600;
+				text-transform: uppercase;
+				letter-spacing: 0.05em;
+				margin-bottom: 8px;
+			}
 
-      .feature-desc {
-        font-size: 12px;
-        color: #666;
-        line-height: 1.5;
-      }
+			.feature-desc {
+				font-size: 12px;
+				color: #666;
+				line-height: 1.5;
+			}
 
-      footer {
-        margin-top: 48px;
-        padding-top: 24px;
-        border-top: 1px solid #e5e5e5;
-        font-size: 11px;
-        color: #999;
-      }
+			footer {
+				margin-top: 48px;
+				padding-top: 24px;
+				border-top: 1px solid #e5e5e5;
+				font-size: 11px;
+				color: #999;
+			}
 
-      footer code {
-        font-family: inherit;
-        background: #f5f5f5;
-        padding: 2px 6px;
-        border: 1px solid #e5e5e5;
-      }
+			footer code {
+				font-family: inherit;
+				background: #f5f5f5;
+				padding: 2px 6px;
+				border: 1px solid #e5e5e5;
+			}
 
-      footer a {
-        color: #000;
-        text-decoration: none;
-      }
+			footer a {
+				color: #000;
+				text-decoration: none;
+			}
 
-      footer a:hover {
-        text-decoration: underline;
-      }
+			footer a:hover {
+				text-decoration: underline;
+			}
 
-      .credit {
-        margin-top: 16px;
-        color: #999;
-      }
+			.credit {
+				margin-top: 16px;
+				color: #999;
+			}
 
-      @media (max-width: 600px) {
-        .features {
-          grid-template-columns: 1fr;
-        }
-        h1 {
-          font-size: 24px;
-        }
-      }
-    </style>
-  </head>
-  <body>
-    <div class="grid-bg"></div>
+			@media (max-width: 600px) {
+				.features {
+					grid-template-columns: 1fr;
+				}
+				h1 {
+					font-size: 24px;
+				}
+			}
+		</style>
+	</head>
+	<body>
+		<div class="grid-bg"></div>
 
-    <div class="container">
-      <header>
-        <div class="logo">
-          <div class="logo-mark"><span>N</span></div>
-          <span class="logo-text">Normical</span>
-        </div>
+		<div class="container">
+			<header>
+				<div class="logo">
+					<div class="logo-mark"><span>N</span></div>
+					<span class="logo-text">Normical</span>
+				</div>
 
-        <h1>Fix Outlook calendar sync</h1>
-        <p class="subtitle">
-          Normalizes Outlook ICS feeds for reliable Google Calendar sync. No
-          more duplicate events or timezone issues.
-        </p>
-      </header>
+				<h1>Fix Outlook calendar sync</h1>
+				<p class="subtitle">
+					Normalizes Outlook ICS feeds for reliable Google Calendar sync. No more duplicate events or timezone issues.
+				</p>
+			</header>
 
-      <div class="card">
-        <form id="form">
-          <label for="url">ICS Calendar URL</label>
-          <input
-            type="url"
-            id="url"
-            name="url"
-            placeholder="https://outlook.office365.com/owa/calendar/..."
-            required
-          />
-          <button type="submit">Generate proxy URL</button>
-        </form>
+			<div class="card">
+				<form id="form">
+					<label for="url">ICS Calendar URL</label>
+					<input type="url" id="url" name="url" placeholder="https://outlook.office365.com/owa/calendar/..." required />
+					<button type="submit">Generate proxy URL</button>
+				</form>
 
-        <div class="result" id="result">
-          <div class="result-label">Your Proxy URL</div>
-          <div class="result-url" id="result-url" onclick="copyUrl()"></div>
-          <div class="copied" id="copied">Copied to clipboard</div>
-        </div>
+				<div class="result" id="result">
+					<div class="result-label">Your Proxy URL</div>
+					<div class="result-url" id="result-url" onclick="copyUrl()"></div>
+					<div class="copied" id="copied">Copied to clipboard</div>
+				</div>
 
-        <div class="error" id="error"></div>
-      </div>
+				<div class="error" id="error"></div>
+			</div>
 
-      <div class="features">
-        <div class="feature">
-          <div class="feature-title">Stable UIDs</div>
-          <div class="feature-desc">
-            Prevents duplicate events from unstable Outlook identifiers
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-title">Timezone Fix</div>
-          <div class="feature-desc">
-            Correctly handles timezone conversions and edge cases
-          </div>
-        </div>
-        <div class="feature">
-          <div class="feature-title">Cancellations</div>
-          <div class="feature-desc">
-            Properly emits cancellation events for deleted items
-          </div>
-        </div>
-      </div>
+			<div class="features">
+				<div class="feature">
+					<div class="feature-title">Stable UIDs</div>
+					<div class="feature-desc">Prevents duplicate events from unstable Outlook identifiers</div>
+				</div>
+				<div class="feature">
+					<div class="feature-title">Timezone Fix</div>
+					<div class="feature-desc">Correctly handles timezone conversions and edge cases</div>
+				</div>
+				<div class="feature">
+					<div class="feature-title">Cancellations</div>
+					<div class="feature-desc">Properly emits cancellation events for deleted items</div>
+				</div>
+			</div>
 
-      <footer>
-        <div>
-          To delete your calendar data, append <code>?delete=1</code> to your
-          proxy URL.
-        </div>
-        <div class="credit">
-          Made with 💛 by
-          <a href="https://x.com/rayhanadev" target="_blank" rel="noopener"
-            >@rayhanadev</a
-          >
-        </div>
-      </footer>
-    </div>
+			<footer>
+				<div>To delete your calendar data, append <code>?delete=1</code> to your proxy URL.</div>
+				<div class="credit">
+					Made with 💛 by
+					<a href="https://x.com/rayhanadev" target="_blank" rel="noopener">@rayhanadev</a>
+				</div>
+			</footer>
+		</div>
 
-    <script>
-      const form = document.getElementById("form");
-      const result = document.getElementById("result");
-      const resultUrl = document.getElementById("result-url");
-      const copied = document.getElementById("copied");
-      const error = document.getElementById("error");
-      let generatedUrl = "";
+		<script>
+			const form = document.getElementById('form');
+			const result = document.getElementById('result');
+			const resultUrl = document.getElementById('result-url');
+			const copied = document.getElementById('copied');
+			const error = document.getElementById('error');
+			let generatedUrl = '';
 
-      form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-        error.textContent = "";
-        result.classList.remove("show");
+			form.addEventListener('submit', async (e) => {
+				e.preventDefault();
+				error.textContent = '';
+				result.classList.remove('show');
 
-        const url = document.getElementById("url").value.trim();
-        if (!url) return;
+				const url = document.getElementById('url').value.trim();
+				if (!url) return;
 
-        try {
-          const res = await fetch("/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url }),
-          });
+				try {
+					const res = await fetch('/register', {
+						method: 'POST',
+						headers: { 'Content-Type': 'application/json' },
+						body: JSON.stringify({ url }),
+					});
 
-          const data = await res.json();
+					const data = await res.json();
 
-          if (!res.ok) {
-            error.textContent = data.error || "Failed to register calendar";
-            return;
-          }
+					if (!res.ok) {
+						error.textContent = data.error || 'Failed to register calendar';
+						return;
+					}
 
-          generatedUrl = data.proxyUrl;
-          resultUrl.textContent = generatedUrl;
-          result.classList.add("show");
-        } catch (err) {
-          error.textContent = "Network error. Please try again.";
-        }
-      });
+					generatedUrl = data.proxyUrl;
+					resultUrl.textContent = generatedUrl;
+					result.classList.add('show');
+				} catch (err) {
+					error.textContent = 'Network error. Please try again.';
+				}
+			});
 
-      function copyUrl() {
-        navigator.clipboard.writeText(generatedUrl).then(() => {
-          copied.classList.add("show");
-          setTimeout(() => copied.classList.remove("show"), 2000);
-        });
-      }
-    </script>
-  </body>
+			function copyUrl() {
+				navigator.clipboard.writeText(generatedUrl).then(() => {
+					copied.classList.add('show');
+					setTimeout(() => copied.classList.remove('show'), 2000);
+				});
+			}
+		</script>
+	</body>
 </html>
