@@ -1,86 +1,92 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>404 - Normical</title>
-  
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-  <meta name="theme-color" content="#000000">
-  
-  <style>
-    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
-    
-    * { box-sizing: border-box; margin: 0; padding: 0; }
-    
-    body {
-      font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
-      background: #fff;
-      color: #000;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 24px;
-    }
-    
-    .grid-bg {
-      position: fixed;
-      inset: 0;
-      background-image: 
-        linear-gradient(rgba(0,0,0,0.03) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.03) 1px, transparent 1px);
-      background-size: 24px 24px;
-      pointer-events: none;
-      z-index: 0;
-    }
-    
-    .container {
-      position: relative;
-      z-index: 1;
-      text-align: center;
-    }
-    
-    .code {
-      font-size: 120px;
-      font-weight: 600;
-      letter-spacing: -0.05em;
-      line-height: 1;
-      margin-bottom: 24px;
-    }
-    
-    .message {
-      font-size: 14px;
-      color: #666;
-      margin-bottom: 48px;
-    }
-    
-    a {
-      display: inline-block;
-      padding: 12px 24px;
-      background: #000;
-      border: 1px solid #000;
-      color: #fff;
-      font-family: inherit;
-      font-size: 13px;
-      font-weight: 500;
-      text-decoration: none;
-      transition: background 0.15s, color 0.15s;
-    }
-    
-    a:hover {
-      background: #fff;
-      color: #000;
-    }
-  </style>
-</head>
-<body>
-  <div class="grid-bg"></div>
-  
-  <div class="container">
-    <div class="code">404</div>
-    <p class="message">Page not found</p>
-    <a href="/">Back to home</a>
-  </div>
-</body>
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>404 - Normical</title>
+
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="theme-color" content="#000000" />
+
+		<style>
+			@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&display=swap');
+
+			* {
+				box-sizing: border-box;
+				margin: 0;
+				padding: 0;
+			}
+
+			body {
+				font-family: 'JetBrains Mono', 'SF Mono', Monaco, 'Cascadia Code', monospace;
+				background: #fff;
+				color: #000;
+				min-height: 100vh;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+				padding: 24px;
+			}
+
+			.grid-bg {
+				position: fixed;
+				inset: 0;
+				background-image:
+					linear-gradient(rgba(0, 0, 0, 0.03) 1px, transparent 1px),
+					linear-gradient(90deg, rgba(0, 0, 0, 0.03) 1px, transparent 1px);
+				background-size: 24px 24px;
+				pointer-events: none;
+				z-index: 0;
+			}
+
+			.container {
+				position: relative;
+				z-index: 1;
+				text-align: center;
+			}
+
+			.code {
+				font-size: 120px;
+				font-weight: 600;
+				letter-spacing: -0.05em;
+				line-height: 1;
+				margin-bottom: 24px;
+			}
+
+			.message {
+				font-size: 14px;
+				color: #666;
+				margin-bottom: 48px;
+			}
+
+			a {
+				display: inline-block;
+				padding: 12px 24px;
+				background: #000;
+				border: 1px solid #000;
+				color: #fff;
+				font-family: inherit;
+				font-size: 13px;
+				font-weight: 500;
+				text-decoration: none;
+				transition:
+					background 0.15s,
+					color 0.15s;
+			}
+
+			a:hover {
+				background: #fff;
+				color: #000;
+			}
+		</style>
+	</head>
+	<body>
+		<div class="grid-bg"></div>
+
+		<div class="container">
+			<div class="code">404</div>
+			<p class="message">Page not found</p>
+			<a href="/">Back to home</a>
+		</div>
+	</body>
 </html>
