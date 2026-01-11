@@ -1,4 +1,4 @@
-export const DEFAULT_TIMEZONE = 'America/New_York';
+export const DEFAULT_TIMEZONE = 'UTC';
 
 // Microsoft Windows timezone names → IANA timezone identifiers
 export const MS_TO_IANA_TIMEZONES: Record<string, string> = {

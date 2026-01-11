@@ -150,6 +150,44 @@
 				color: #999;
 			}
 
+			select {
+				width: 100%;
+				padding: 12px 16px;
+				margin-top: 16px;
+				background: #fff;
+				border: 1px solid #e5e5e5;
+				font-family: inherit;
+				font-size: 13px;
+				color: #000;
+				cursor: pointer;
+				transition: border-color 0.15s;
+				appearance: none;
+				background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+				background-repeat: no-repeat;
+				background-position: right 16px center;
+			}
+
+			select:focus {
+				outline: none;
+				border-color: #000;
+			}
+
+			select option {
+				font-family: inherit;
+			}
+
+			.select-wrapper {
+				margin-top: 16px;
+			}
+
+			.select-wrapper label {
+				margin-bottom: 8px;
+			}
+
+			.select-wrapper select {
+				margin-top: 8px;
+			}
+
 			button {
 				width: 100%;
 				padding: 12px 16px;
@@ -311,6 +349,40 @@
 				<form id="form">
 					<label for="url">ICS Calendar URL</label>
 					<input type="url" id="url" name="url" placeholder="https://outlook.office365.com/owa/calendar/..." required />
+
+					<div class="select-wrapper">
+						<label for="timezone">Timezone (optional)</label>
+						<select id="timezone" name="timezone">
+							<option value="">Use server default (UTC)</option>
+							<optgroup label="Americas">
+								<option value="America/New_York">Eastern Time (America/New_York)</option>
+								<option value="America/Chicago">Central Time (America/Chicago)</option>
+								<option value="America/Denver">Mountain Time (America/Denver)</option>
+								<option value="America/Los_Angeles">Pacific Time (America/Los_Angeles)</option>
+								<option value="America/Anchorage">Alaska Time (America/Anchorage)</option>
+								<option value="Pacific/Honolulu">Hawaii Time (Pacific/Honolulu)</option>
+								<option value="America/Halifax">Atlantic Time (America/Halifax)</option>
+								<option value="America/Sao_Paulo">Brasilia Time (America/Sao_Paulo)</option>
+							</optgroup>
+							<optgroup label="Europe &amp; Africa">
+								<option value="UTC">UTC</option>
+								<option value="Europe/London">London (Europe/London)</option>
+								<option value="Europe/Paris">Paris (Europe/Paris)</option>
+								<option value="Europe/Berlin">Berlin (Europe/Berlin)</option>
+								<option value="Europe/Moscow">Moscow (Europe/Moscow)</option>
+							</optgroup>
+							<optgroup label="Asia &amp; Pacific">
+								<option value="Asia/Dubai">Dubai (Asia/Dubai)</option>
+								<option value="Asia/Kolkata">India (Asia/Kolkata)</option>
+								<option value="Asia/Singapore">Singapore (Asia/Singapore)</option>
+								<option value="Asia/Shanghai">China (Asia/Shanghai)</option>
+								<option value="Asia/Tokyo">Tokyo (Asia/Tokyo)</option>
+								<option value="Australia/Sydney">Sydney (Australia/Sydney)</option>
+								<option value="Pacific/Auckland">Auckland (Pacific/Auckland)</option>
+							</optgroup>
+						</select>
+					</div>
+
 					<button type="submit">Generate proxy URL</button>
 				</form>
 
@@ -363,11 +435,18 @@
 				const url = document.getElementById('url').value.trim();
 				if (!url) return;
 
+				const timezone = document.getElementById('timezone').value;
+
 				try {
+					const body = { url };
+					if (timezone) {
+						body.timezone = timezone;
+					}
+
 					const res = await fetch('/register', {
 						method: 'POST',
 						headers: { 'Content-Type': 'application/json' },
-						body: JSON.stringify({ url }),
+						body: JSON.stringify(body),
 					});
 
 					const data = await res.json();

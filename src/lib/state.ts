@@ -82,6 +82,7 @@ export async function getUpstreamHash(kv: KVNamespace, prefix?: string): Promise
 export interface TenantConfig {
 	sourceUrl: string;
 	createdAt: number;
+	timezone?: string;
 }
 
 export async function getTenantConfig(kv: KVNamespace, hash: string): Promise<TenantConfig | null> {

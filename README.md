@@ -56,13 +56,7 @@ bunx wrangler kv namespace create CALENDAR_STATE
 }
 ```
 
-4. (Optional) Configure environment variables in the [Cloudflare Dashboard](https://dash.cloudflare.com):
-
-   | Variable           | Required | Description                                                                      |
-   | ------------------ | -------- | -------------------------------------------------------------------------------- |
-   | `DEFAULT_TIMEZONE` | No       | IANA timezone for events without explicit timezone (default: `America/New_York`) |
-
-5. Deploy:
+4. Deploy:
 
 ```bash
 bunx wrangler deploy
@@ -80,13 +74,13 @@ Then access `http://localhost:8787` to test the service.
 
 ## API Endpoints
 
-| Endpoint                        | Method | Description                                      |
-| ------------------------------- | ------ | ------------------------------------------------ |
-| `/`                             | GET    | Web UI for registering calendars                 |
+| Endpoint                        | Method | Description                                         |
+| ------------------------------- | ------ | --------------------------------------------------- |
+| `/`                             | GET    | Web UI for registering calendars                    |
 | `/register`                     | POST   | Register a calendar (JSON body: `{ "url": "..." }`) |
-| `/{hash}/calendar.ics`          | GET    | Returns the normalized ICS calendar              |
-| `/{hash}/calendar.ics?delete=1` | GET    | Deletes all stored data for this calendar        |
-| `/health`                       | GET    | Health check endpoint                            |
+| `/{hash}/calendar.ics`          | GET    | Returns the normalized ICS calendar                 |
+| `/{hash}/calendar.ics?delete=1` | GET    | Deletes all stored data for this calendar           |
+| `/health`                       | GET    | Health check endpoint                               |
 
 ## Microsoft to Google Calendar Discrepancies
 

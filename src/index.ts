@@ -65,7 +65,7 @@ export default {
 } satisfies ExportedHandler<Env>;
 
 async function handleRegister(request: Request, env: Env, requestUrl: URL): Promise<Response> {
-	let body: { url?: string };
+	let body: { url?: string; timezone?: string };
 	try {
 		body = await request.json();
 	} catch {
@@ -87,6 +87,8 @@ async function handleRegister(request: Request, env: Env, requestUrl: URL): Prom
 		return jsonResponse({ error: 'URL does not appear to be a calendar feed' }, 400);
 	}
 
+	const timezone = body.timezone?.trim() || undefined;
+
 	const hash = (await computeHash(sourceUrl)).slice(0, 16);
 
 	const existingConfig = await getTenantConfig(env.CALENDAR_STATE, hash);
@@ -94,8 +96,15 @@ async function handleRegister(request: Request, env: Env, requestUrl: URL): Prom
 		const config: TenantConfig = {
 			sourceUrl,
 			createdAt: Date.now(),
+			timezone,
 		};
 		await saveTenantConfig(env.CALENDAR_STATE, hash, config);
+	} else if (timezone && existingConfig.timezone !== timezone) {
+		const updatedConfig: TenantConfig = {
+			...existingConfig,
+			timezone,
+		};
+		await saveTenantConfig(env.CALENDAR_STATE, hash, updatedConfig);
 	}
 
 	const proxyUrl = `${requestUrl.protocol}//${requestUrl.host}/${hash}/calendar.ics`;
@@ -124,6 +133,8 @@ async function handleCalendarRequest(
 	if (!config) {
 		return new Response('Calendar not found', { status: 404 });
 	}
+
+	const effectiveTimezone = config.timezone || env.DEFAULT_TIMEZONE;
 
 	try {
 		const response = await fetch(config.sourceUrl, {
@@ -181,8 +192,8 @@ async function handleCalendarRequest(
 		}
 
 		const parsed = parseIcs(rawIcs);
-		const normalized = await normalizeCalendar(parsed, env.CALENDAR_STATE, hash, env.DEFAULT_TIMEZONE);
-		const output = serializeCalendar(normalized, env.DEFAULT_TIMEZONE);
+		const normalized = await normalizeCalendar(parsed, env.CALENDAR_STATE, hash, effectiveTimezone);
+		const output = serializeCalendar(normalized, effectiveTimezone);
 
 		const etag = await computeEtag(output);
 
